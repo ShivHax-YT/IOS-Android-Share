@@ -1,0 +1,18 @@
+# Android
+.gradle/
+**/build/
+local.properties
+*.iml
+.idea/
+
+# Apple
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.swiftpm/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nearpair.invalid/protocol/transfer-v1.schema.json",
+  "title": "NearPair transfer protocol v1",
+  "oneOf": [
+    { "$ref": "#/$defs/metadata" },
+    { "$ref": "#/$defs/verified" },
+    { "$ref": "#/$defs/error" }
+  ],
+  "$defs": {
+    "base": {
+      "type": "object",
+      "required": ["type", "version", "transferId", "payloadId"],
+      "properties": {
+        "type": { "type": "string" },
+        "version": { "const": 1 },
+        "transferId": { "type": "string", "format": "uuid" },
+        "payloadId": { "type": "integer", "minimum": -9223372036854775808, "maximum": 9223372036854775807 }
+      }
+    },
+    "metadata": {
+      "allOf": [
+        { "$ref": "#/$defs/base" },
+        {
+          "type": "object",
+          "required": ["fileName", "mimeType", "sizeBytes", "sha256"],
+          "properties": {
+            "type": { "const": "metadata" },
+            "fileName": { "type": "string", "minLength": 1 },
+            "mimeType": {
+              "type": "string",
+              "pattern": "^(application/pdf|image/[^\\s]+|video/[^\\s]+)$"
+            },
+            "sizeBytes": { "type": "integer", "minimum": 1 },
+            "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+          }
+        }
+      ]
+    },
+    "verified": {
+      "allOf": [
+        { "$ref": "#/$defs/base" },
+        {
+          "type": "object",
+          "properties": { "type": { "const": "verified" } }
+        }
+      ]
+    },
+    "error": {
+      "allOf": [
+        { "$ref": "#/$defs/base" },
+        {
+          "type": "object",
+          "required": ["code"],
+          "properties": {
+            "type": { "const": "error" },
+            "code": {
+              "enum": [
+                "unsupportedVersion",
+                "invalidMetadata",
+                "unsupportedType",
+                "insufficientStorage",
+                "sizeMismatch",
+                "checksumMismatch",
+                "rejected",
+                "cancelled",
+                "ioFailure"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

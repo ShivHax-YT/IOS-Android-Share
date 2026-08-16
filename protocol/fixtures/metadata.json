@@ -1,0 +1,11 @@
+{
+  "type": "metadata",
+  "version": 1,
+  "transferId": "7e51382d-1d59-4b7a-b327-c2d0a87d2eb9",
+  "payloadId": 123456,
+  "fileName": "vacation-video.mp4",
+  "mimeType": "video/mp4",
+  "sizeBytes": 2147483648,
+  "sha256": "4f64b8c2b7b7423a88994bd53017c9c8f6f8f739d31513798b7f18df0e07f1d2"
+}
+
